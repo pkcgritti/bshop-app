@@ -1,10 +1,10 @@
 {
   "name": "quasar-app",
-  "productName": "Quasar App",
+  "productName": "Barbershop App",
   "version": "0.0.1",
   "private": true,
-  "description": "A Quasar App",
-  "author": "Your Name <your@email.com>",
+  "description": "Aplicativo barbershop",
+  "author": "Marcos Cesar Gritti <cesargritti@gmail.com>",
   "scripts": {
     "clean": "node build/script.clean.js",
     "dev": "node build/script.dev.js",
@@ -12,11 +12,16 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-runtime": "^6.25.0",
     "quasar-extras": "0.x",
     "quasar-framework": "^0.14.4",
+    "socket.io-client": "^2.0.4",
     "vue": "^2.5.0",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-socket.io": "^2.1.1-a",
+    "vuex": "^3.0.1",
+    "vuex-router-sync": "^5.0.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",

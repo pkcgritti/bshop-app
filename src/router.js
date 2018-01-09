@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './store'
 
 Vue.use(VueRouter)
 
@@ -8,7 +9,7 @@ function load (component) {
   return () => import(`@/${component}.vue`)
 }
 
-export default new VueRouter({
+const router = new VueRouter({
   /*
    * NOTE! VueRouter "history" mode DOESN'T works for Cordova builds,
    * it is only to be used only for websites.
@@ -27,6 +28,7 @@ export default new VueRouter({
   routes: [
     { path: '/',
       component: load('Index'),
+      meta: { requiresAuth: true },
       children: [
         { path: '', component: load('Home') },
         { path: 'client/schedule', component: load('ClientSchedule') },
@@ -36,8 +38,26 @@ export default new VueRouter({
         { path: 'profile', component: load('Profile') }
       ]
     },
-
+    { path: '/login', name: 'login', component: load('Login'), params: { userJustCreated: '' } },
+    { path: '/signup', name: 'signup', component: load('Signup') },
     // Always leave this last one
     { path: '*', component: load('Error404') } // Not found
   ]
+})
+
+export default router
+
+router.beforeEach(async (to, from, next) => {
+  // TODO: Check if token validation is slowing down the application
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    try {
+      await store.dispatch('validateToken')
+    }
+    catch (e) {
+      console.log(e)
+      return next({ path: '/login', query: { redirect: to.fullPath } })
+    }
+    if (!store.state.user.username) await store.dispatch('retrieveUserInformation')
+  }
+  next()
 })

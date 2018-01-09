@@ -1,5 +1,5 @@
 <template>
   <div class="layout-padding">
-    <h1> Agende um horário </h1>
+    <h3> Agende um horário </h3>
   </div>
 </template>

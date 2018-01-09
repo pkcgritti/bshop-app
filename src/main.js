@@ -13,6 +13,16 @@ require(`quasar/dist/quasar.${__THEME}.css`)
 import Vue from 'vue'
 import Quasar from 'quasar'
 import router from './router'
+import store from './store'
+import { sync } from 'vuex-router-sync'
+
+import socketio from 'socket.io-client'
+import VueSocketIO from 'vue-socket.io'
+
+sync(store, router)
+
+export const SocketInstance = socketio('http://' + window.location.hostname + ':3000')
+Vue.use(VueSocketIO, SocketInstance, store)
 
 Vue.config.productionTip = false
 Vue.use(Quasar) // Install Quasar Framework
@@ -30,6 +40,7 @@ Quasar.start(() => {
   new Vue({
     el: '#q-app',
     router,
+    store,
     render: h => h(require('./App').default)
   })
 })

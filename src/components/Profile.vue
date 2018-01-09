@@ -1,5 +1,5 @@
 <template>
   <div class="layout-padding">
-    <h1>Meu perfil</h1>
+    <h3>Meu perfil</h3>
   </div>
 </template>
